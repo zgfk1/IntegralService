@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.czbank.integralservice.dao.CommodityMapper" >
+  <resultMap id="BaseResultMap" type="com.czbank.integralservice.domain.Commodity" >
+    <result column="commodity_id" property="commodityId" jdbcType="BIGINT" />
+    <result column="commodity_name" property="commodityName" jdbcType="VARCHAR" />
+    <result column="commodity_integral" property="commodityIntegral" jdbcType="INTEGER" />
+    <result column="commodity_amount" property="commodityAmount" jdbcType="INTEGER" />
+    <result column="commodity_exchangenum" property="commodityExchangenum" jdbcType="INTEGER" />
+    <result column="commodity_availablenum" property="commodityAvailablenum" jdbcType="INTEGER" />
+    <result column="commodity_intro" property="commodityIntro" jdbcType="VARCHAR" />
+    <result column="commodity_picture" property="commodityPicture" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    commodity_id, commodity_name, commodity_integral, commodity_amount, commodity_exchangenum, 
+    commodity_availablenum, commodity_intro, commodity_picture
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.czbank.integralservice.domain.CommodityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.czbank.integralservice.domain.CommodityExample" >
+    delete from commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.czbank.integralservice.domain.Commodity" >
+    insert into commodity (commodity_id, commodity_name, commodity_integral, 
+      commodity_amount, commodity_exchangenum, 
+      commodity_availablenum, commodity_intro, 
+      commodity_picture)
+    values (#{commodityId,jdbcType=BIGINT}, #{commodityName,jdbcType=VARCHAR}, #{commodityIntegral,jdbcType=INTEGER}, 
+      #{commodityAmount,jdbcType=INTEGER}, #{commodityExchangenum,jdbcType=INTEGER}, 
+      #{commodityAvailablenum,jdbcType=INTEGER}, #{commodityIntro,jdbcType=VARCHAR}, 
+      #{commodityPicture,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.czbank.integralservice.domain.Commodity" >
+    insert into commodity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commodityId != null" >
+        commodity_id,
+      </if>
+      <if test="commodityName != null" >
+        commodity_name,
+      </if>
+      <if test="commodityIntegral != null" >
+        commodity_integral,
+      </if>
+      <if test="commodityAmount != null" >
+        commodity_amount,
+      </if>
+      <if test="commodityExchangenum != null" >
+        commodity_exchangenum,
+      </if>
+      <if test="commodityAvailablenum != null" >
+        commodity_availablenum,
+      </if>
+      <if test="commodityIntro != null" >
+        commodity_intro,
+      </if>
+      <if test="commodityPicture != null" >
+        commodity_picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commodityId != null" >
+        #{commodityId,jdbcType=BIGINT},
+      </if>
+      <if test="commodityName != null" >
+        #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityIntegral != null" >
+        #{commodityIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="commodityAmount != null" >
+        #{commodityAmount,jdbcType=INTEGER},
+      </if>
+      <if test="commodityExchangenum != null" >
+        #{commodityExchangenum,jdbcType=INTEGER},
+      </if>
+      <if test="commodityAvailablenum != null" >
+        #{commodityAvailablenum,jdbcType=INTEGER},
+      </if>
+      <if test="commodityIntro != null" >
+        #{commodityIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityPicture != null" >
+        #{commodityPicture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.czbank.integralservice.domain.CommodityExample" resultType="java.lang.Integer" >
+    select count(*) from commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update commodity
+    <set >
+      <if test="record.commodityId != null" >
+        commodity_id = #{record.commodityId,jdbcType=BIGINT},
+      </if>
+      <if test="record.commodityName != null" >
+        commodity_name = #{record.commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commodityIntegral != null" >
+        commodity_integral = #{record.commodityIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityAmount != null" >
+        commodity_amount = #{record.commodityAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityExchangenum != null" >
+        commodity_exchangenum = #{record.commodityExchangenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityAvailablenum != null" >
+        commodity_availablenum = #{record.commodityAvailablenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityIntro != null" >
+        commodity_intro = #{record.commodityIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commodityPicture != null" >
+        commodity_picture = #{record.commodityPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update commodity
+    set commodity_id = #{record.commodityId,jdbcType=BIGINT},
+      commodity_name = #{record.commodityName,jdbcType=VARCHAR},
+      commodity_integral = #{record.commodityIntegral,jdbcType=INTEGER},
+      commodity_amount = #{record.commodityAmount,jdbcType=INTEGER},
+      commodity_exchangenum = #{record.commodityExchangenum,jdbcType=INTEGER},
+      commodity_availablenum = #{record.commodityAvailablenum,jdbcType=INTEGER},
+      commodity_intro = #{record.commodityIntro,jdbcType=VARCHAR},
+      commodity_picture = #{record.commodityPicture,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

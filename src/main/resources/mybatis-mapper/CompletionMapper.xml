@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.czbank.integralservice.dao.CompletionMapper" >
+  <resultMap id="BaseResultMap" type="com.czbank.integralservice.domain.Completion" >
+    <result column="completion_id" property="completionId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="mission_id" property="missionId" jdbcType="BIGINT" />
+    <result column="completion_time" property="completionTime" jdbcType="TIMESTAMP" />
+    <result column="amountbefore" property="amountbefore" jdbcType="INTEGER" />
+    <result column="amountafter" property="amountafter" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    completion_id, user_id, mission_id, completion_time, amountbefore, amountafter
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.czbank.integralservice.domain.CompletionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from completion
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.czbank.integralservice.domain.CompletionExample" >
+    delete from completion
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.czbank.integralservice.domain.Completion" >
+    insert into completion (completion_id, user_id, mission_id, 
+      completion_time, amountbefore, amountafter
+      )
+    values (#{completionId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{missionId,jdbcType=BIGINT}, 
+      #{completionTime,jdbcType=TIMESTAMP}, #{amountbefore,jdbcType=INTEGER}, #{amountafter,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.czbank.integralservice.domain.Completion" >
+    insert into completion
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="completionId != null" >
+        completion_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="missionId != null" >
+        mission_id,
+      </if>
+      <if test="completionTime != null" >
+        completion_time,
+      </if>
+      <if test="amountbefore != null" >
+        amountbefore,
+      </if>
+      <if test="amountafter != null" >
+        amountafter,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="completionId != null" >
+        #{completionId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="missionId != null" >
+        #{missionId,jdbcType=BIGINT},
+      </if>
+      <if test="completionTime != null" >
+        #{completionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amountbefore != null" >
+        #{amountbefore,jdbcType=INTEGER},
+      </if>
+      <if test="amountafter != null" >
+        #{amountafter,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.czbank.integralservice.domain.CompletionExample" resultType="java.lang.Integer" >
+    select count(*) from completion
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update completion
+    <set >
+      <if test="record.completionId != null" >
+        completion_id = #{record.completionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.missionId != null" >
+        mission_id = #{record.missionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.completionTime != null" >
+        completion_time = #{record.completionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.amountbefore != null" >
+        amountbefore = #{record.amountbefore,jdbcType=INTEGER},
+      </if>
+      <if test="record.amountafter != null" >
+        amountafter = #{record.amountafter,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update completion
+    set completion_id = #{record.completionId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      mission_id = #{record.missionId,jdbcType=BIGINT},
+      completion_time = #{record.completionTime,jdbcType=TIMESTAMP},
+      amountbefore = #{record.amountbefore,jdbcType=INTEGER},
+      amountafter = #{record.amountafter,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
