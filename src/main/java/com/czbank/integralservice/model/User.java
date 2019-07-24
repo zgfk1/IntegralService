@@ -1,4 +1,4 @@
-package com.czbank.integralservice.domain;
+package com.czbank.integralservice.model;
 
 public class User {
     private Long userId;
