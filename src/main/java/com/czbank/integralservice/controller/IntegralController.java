@@ -2,8 +2,8 @@ package com.czbank.integralservice.controller;
 
 import org.springframework.stereotype.Controller;
 
-@Controller
-public class MainController {
 
+@Controller
+public class IntegralController {
 
 }
