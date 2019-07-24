@@ -1,9 +1,22 @@
 package com.czbank.integralservice.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * @author Han
+ * @date 2019.7.24
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class User {
     private Long userId;
 
-    private String acccount;
+    private String account;
 
     private String password;
 
@@ -15,7 +28,7 @@ public class User {
 
     private Integer integralAmount;
 
-    private Integer integralHistoryamount;
+    private Integer integralHistoryAmount;
 
     private String telNumber;
 

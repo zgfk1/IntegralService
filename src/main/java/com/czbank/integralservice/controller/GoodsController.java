@@ -1,13 +1,13 @@
 package com.czbank.integralservice.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.czbank.integralservice.mapper.CommodityMapper;
+import com.czbank.integralservice.mapper.ExchangeMapper;
 import com.czbank.integralservice.model.Commodity;
-import jdk.nashorn.internal.runtime.JSONFunctions;
+import com.czbank.integralservice.model.Exchange;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +33,9 @@ public class GoodsController {
     @Resource
     private CommodityMapper commodityMapper;
 
+    @Resource
+    private ExchangeMapper exchangeMapper;
+
     /**
      * 添加新商品接口
      *
@@ -39,22 +43,20 @@ public class GoodsController {
      * @param response
      * @throws IOException
      */
-    @RequestMapping("/addGoods")
-    public void addGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @PostMapping("/addGoods")
+    public int addGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Commodity commodity = new Commodity();
-        commodity.setCommodity_id(Long.parseLong(request.getParameter("commodity_id")));
-        commodity.setCommodity_name(request.getParameter("commodity_name"));
-        commodity.setCommodity_integral(Long.parseLong(request.getParameter("commodity_integral")));
-        commodity.setCommodity_amount(Long.parseLong(request.getParameter("commodity_amount")));
-        commodity.setCommodity_exchangenum(Integer.parseUnsignedInt(request.getParameter("commodity_exchangenum")));
-        commodity.setCommodity_availablenum(Integer.parseUnsignedInt(request.getParameter("commodity_availablenum")));
-        commodity.setCommodity_intro(request.getParameter("commodity_intro"));
-        commodity.setCommodity_picture(request.getParameter("commodity_picture"));
+        commodity.setCommodityId(Long.parseLong(request.getParameter("commodityId")));
+        commodity.setCommodityName(request.getParameter("commodityName"));
+        commodity.setCommodityIntegral(Long.parseLong(request.getParameter("commodityIntegral")));
+        commodity.setAmount(Long.parseLong(request.getParameter("commodityAmount")));
+        commodity.setExchangeNum(Integer.parseUnsignedInt(request.getParameter("commodityExchangenum")));
+        commodity.setAvailableNum(Integer.parseUnsignedInt(request.getParameter("commodityAvailablenum")));
+        commodity.setIntro(request.getParameter("commodityIntro"));
+        commodity.setPic(request.getParameter("commodityPicture"));
         try {
             commodityMapper.insert(commodity);
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            log.warn(e.getMessage());
+            return 1;
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
@@ -63,7 +65,9 @@ public class GoodsController {
             out.flush();
             out.close();
         }
+        return 0;
     }
+
 
     /**
      * 删除商品接口
@@ -72,10 +76,11 @@ public class GoodsController {
      * @param response
      * @throws IOException
      */
-    @RequestMapping("/deleteGoods")
-    public void deleteGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @PostMapping("/deleteGoods")
+    public int deleteGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try{
             commodityMapper.delete(Long.parseLong(request.getParameter("commodityId")));
+            return 1;
         } catch (Exception e) {
             log.error("删除失败，请稍后再试", e);
             throw e;
@@ -93,22 +98,27 @@ public class GoodsController {
      * @param response
      * @throws IOException
      */
-    @RequestMapping("/updateGoods")
-    public void updateGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @PostMapping("/updateGoods")
+    public int updateGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Commodity commodity = new Commodity();
-        commodity.setCommodity_id(Long.parseLong(request.getParameter("commodity_id")));
-        commodity.setCommodity_name(request.getParameter("commodity_name"));
-        commodity.setCommodity_integral(Long.parseLong(request.getParameter("commodity_integral")));
-        commodity.setCommodity_amount(Long.parseLong(request.getParameter("commodity_amount")));
-        commodity.setCommodity_exchangenum(Integer.parseUnsignedInt(request.getParameter("commodity_exchangenum")));
-        commodity.setCommodity_availablenum(Integer.parseUnsignedInt(request.getParameter("commodity_availablenum")));
-        commodity.setCommodity_intro(request.getParameter("commodity_intro"));
-        commodity.setCommodity_picture(request.getParameter("commodity_picture"));
+        commodity.setCommodityId(Long.parseLong(request.getParameter("commodityId")));
+        commodity.setCommodityName(request.getParameter("commodityName"));
+        commodity.setCommodityIntegral(Long.parseLong(request.getParameter("commodityIntegral")));
+        commodity.setAmount(Long.parseLong(request.getParameter("commodityAmount")));
+        commodity.setExchangeNum(Integer.parseUnsignedInt(request.getParameter("commodityExchangenum")));
+        commodity.setAvailableNum(Integer.parseUnsignedInt(request.getParameter("commodityAvailablenum")));
+        commodity.setIntro(request.getParameter("commodityIntro"));
+        commodity.setPic(request.getParameter("commodityPicture"));
         try{
             commodityMapper.update(commodity);
+            return 1;
         } catch (Exception e) {
             log.error("查询失败，请稍后再试", e);
             throw e;
+        } finally {
+            PrintWriter out = response.getWriter();
+            out.flush();
+            out.close();
         }
     }
 
@@ -119,13 +129,12 @@ public class GoodsController {
      * @param response
      * @throws IOException
      */
-    @PostMapping("/commoditys")
+    @GetMapping("/commoditys")
     public Object queryGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<Commodity> commoditys = new ArrayList<>();
         try{
             commoditys = commodityMapper.selectAll();
-//            return JSON.toJsonString(commoditys);
-            return "";
+            return JSON.toJSONString(commoditys.toString());
         } catch (Exception e) {
             log.error("查询失败，请稍后再试", e);
             throw e;
@@ -139,16 +148,46 @@ public class GoodsController {
      * @param response
      * @throws IOException
      */
-    @PostMapping("/commodity")
-    public void querySpecialGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @GetMapping("/commodity")
+    public Object querySpecialGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Commodity commodity = new Commodity();
-        commodity.setCommodity_id(Long.parseLong(request.getParameter("commodityId")));
+        String id = request.getParameter("commodityId");
+        System.out.println(id);
+        commodity.setCommodityId(Long.parseLong(id));
         try{
             commodity = commodityMapper.selectOne(commodity);
+            return JSON.toJSONString(commodity);
         } catch (Exception e) {
             log.error("查询失败，请稍后再试", e);
             throw e;
         }
     }
 
+    /**
+     * 提交商品兑换记录接口
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @PostMapping("/exchange")
+    public int submitGoodsExchange(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Exchange exchange = new Exchange();
+        exchange.setUserId(Long.parseLong(request.getParameter("userId")));
+        exchange.setCommodityId(Long.parseLong(request.getParameter("commodityId")));
+        exchange.setUserContact(request.getParameter("userContact"));
+        //exchange.setExchangeId();
+        exchange.setExchangeQuantity(1);
+        exchange.setExchangeTime(new Date());
+        exchange.setDeliveryAddress(request.getParameter("deliveryAddress"));
+        exchange.setAmountAfter(Long.parseLong(request.getParameter("amountafter")));
+        exchange.setAmountBefore(Long.parseLong(request.getParameter("amountbefore")));
+        try{
+            exchangeMapper.insert(exchange);
+            return 1;
+        } catch (Exception e) {
+            log.error("提交失败，请稍后再试", e);
+            throw e;
+        }
+    }
 }

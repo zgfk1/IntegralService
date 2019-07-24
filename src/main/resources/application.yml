@@ -4,14 +4,15 @@ server:
     context-path: /
 
 spring:
-  mvc:
-    static-path-pattern: /static/**
-
   datasource:
     url: jdbc:mysql://120.78.148.229:3306/integral_service?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username: root
-    password: MYSQLhzh123
+    username: czbank
+    password: czbank123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 logging:
   config: classpath:log4j2-spring.xml
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
