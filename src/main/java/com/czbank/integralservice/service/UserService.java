@@ -17,6 +17,8 @@ public interface UserService {
     //通过获得当前用户信息
     User getUserOneById(User user);
 
+    //获取可展示的用户信息
+    User getUserInfoOneById(User user);
     //获得当前可获取积分的任务列表
 
     //获得推荐商品预览列表

@@ -29,6 +29,21 @@ public class UserServiceImpl implements UserService {
         return userMapper.UserSelectOne(user);
     }
 
+    /**
+     * 返回安全的用户信息
+     * @param user 传入的用户信息
+     * @return userInfo 返回的用户信息
+     *
+     */
+    @Override
+    public User getUserInfoOneById(User user) {
+        User userInfo = new User();
+        userInfo=userMapper.UserSelectOne(user);
+
+        userInfo.setPassword(null);
+        return  userInfo;
+    }
+
     ;
 
 }
