@@ -8,7 +8,7 @@ spring:
     static-path-pattern: /static/**
 
   datasource:
-    url: jdbc:mysql://120.78.148.229:3306/intergral_service?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://120.78.148.229:3306/integral_service?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: MYSQLhzh123
     driver-class-name: com.mysql.cj.jdbc.Driver
