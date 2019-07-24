@@ -18,7 +18,7 @@ public class Commodity {
 
     private String commodityName;
 
-    private Long commodityIntegral;
+    private Long integralNum;
 
     private Long amount;
 
@@ -28,5 +28,5 @@ public class Commodity {
 
     private String intro;
 
-    private String pic;
+    private String picture;
 }
