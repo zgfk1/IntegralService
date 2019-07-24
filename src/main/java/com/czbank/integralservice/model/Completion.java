@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * @author Han
@@ -24,7 +24,7 @@ public class Completion {
 
     private Long missionId;
 
-    private LocalDateTime completionTime;
+    private LocalDate completionTime;
 
     private Long amountBefore;
 

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * @author Han
@@ -24,7 +24,7 @@ public class Exchange {
 
     private Integer exchangeQuantity;
 
-    private LocalDateTime exchangeTime;
+    private LocalDate exchangeTime;
 
     private Long amountBefore;
 
