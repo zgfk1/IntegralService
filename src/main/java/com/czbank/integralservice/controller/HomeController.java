@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
- * @author 李举磊
+ * @author danghaibulan
  * 用于控制用户的首页页面
  */
 @Slf4j

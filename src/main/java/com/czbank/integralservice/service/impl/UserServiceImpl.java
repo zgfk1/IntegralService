@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+/**
+ * @author danghaibulan
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -19,7 +22,6 @@ public class UserServiceImpl implements UserService {
     /**
      * @param user 需要查询的用户实体
      * @return 数据库中完整的用户实体
-     * @author 李举磊
      */
     @Override
     public User getUserOneById(User user) {

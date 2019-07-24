@@ -5,13 +5,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/*
- * coder 李举磊
- * UserService相关的服务接口
- *
- *
- * */
 
+/**
+ * @author danghaibulan
+ */
 public interface UserService {
 
 
