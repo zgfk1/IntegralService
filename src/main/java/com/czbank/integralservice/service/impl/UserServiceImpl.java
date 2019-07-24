@@ -44,6 +44,23 @@ public class UserServiceImpl implements UserService {
         return  userInfo;
     }
 
-    ;
+    @Override
+    public int userInsert(User user) {
+        return userMapper.userInsert(user);
+    }//陈易京
 
+    @Override
+    public int userDelete(Long userId) {
+        return userMapper.userDelete(userId);
+    }//陈易京
+
+    @Override
+    public int integralAmountUpdate(Long userId,int integralAmount2) {
+        return userMapper.integralAmountUpdate(userId,integralAmount2);
+    }//陈易京
+
+    @Override
+    public int integralHistoryAmountUpdate(Long userId,int integralHistoryAmount2) {
+        return userMapper.integralHistoryAmountUpdate(userId,integralHistoryAmount2);
+    }//陈易京
 }
