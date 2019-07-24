@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,12 +49,12 @@ public class GoodsController {
         Commodity commodity = new Commodity();
         commodity.setCommodityId(Long.parseLong(request.getParameter("commodityId")));
         commodity.setCommodityName(request.getParameter("commodityName"));
-        commodity.setCommodityIntegral(Long.parseLong(request.getParameter("commodityIntegral")));
+        commodity.setIntegralNum(Long.parseLong(request.getParameter("commodityIntegral")));
         commodity.setAmount(Long.parseLong(request.getParameter("commodityAmount")));
         commodity.setExchangeNum(Integer.parseUnsignedInt(request.getParameter("commodityExchangenum")));
         commodity.setAvailableNum(Integer.parseUnsignedInt(request.getParameter("commodityAvailablenum")));
         commodity.setIntro(request.getParameter("commodityIntro"));
-        commodity.setPic(request.getParameter("commodityPicture"));
+        commodity.setPicture(request.getParameter("commodityPicture"));
         try {
             commodityMapper.insert(commodity);
             return 1;
@@ -103,12 +104,12 @@ public class GoodsController {
         Commodity commodity = new Commodity();
         commodity.setCommodityId(Long.parseLong(request.getParameter("commodityId")));
         commodity.setCommodityName(request.getParameter("commodityName"));
-        commodity.setCommodityIntegral(Long.parseLong(request.getParameter("commodityIntegral")));
+        commodity.setIntegralNum(Long.parseLong(request.getParameter("commodityIntegral")));
         commodity.setAmount(Long.parseLong(request.getParameter("commodityAmount")));
         commodity.setExchangeNum(Integer.parseUnsignedInt(request.getParameter("commodityExchangenum")));
         commodity.setAvailableNum(Integer.parseUnsignedInt(request.getParameter("commodityAvailablenum")));
         commodity.setIntro(request.getParameter("commodityIntro"));
-        commodity.setPic(request.getParameter("commodityPicture"));
+        commodity.setPicture(request.getParameter("commodityPicture"));
         try{
             commodityMapper.update(commodity);
             return 1;
@@ -156,7 +157,8 @@ public class GoodsController {
         commodity.setCommodityId(Long.parseLong(id));
         try{
             commodity = commodityMapper.selectOne(commodity);
-            return JSON.toJSONString(commodity);
+            JSON.toJSONString(commodity);
+            return null;
         } catch (Exception e) {
             log.error("查询失败，请稍后再试", e);
             throw e;
@@ -178,7 +180,7 @@ public class GoodsController {
         exchange.setUserContact(request.getParameter("userContact"));
         //exchange.setExchangeId();
         exchange.setExchangeQuantity(1);
-        exchange.setExchangeTime(new Date());
+        exchange.setExchangeTime(LocalDate.now());
         exchange.setDeliveryAddress(request.getParameter("deliveryAddress"));
         exchange.setAmountAfter(Long.parseLong(request.getParameter("amountafter")));
         exchange.setAmountBefore(Long.parseLong(request.getParameter("amountbefore")));
