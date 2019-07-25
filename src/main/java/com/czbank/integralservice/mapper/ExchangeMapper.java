@@ -18,16 +18,16 @@ public interface ExchangeMapper {
     int insert(Exchange exchange);
     //1delete
     @Delete("delete from exchange where exchange_id = #{exchangeId}")
-    int delete(long exchange_id);
+    int delete(long exchangeId);
     //2update
     @Update("update exchange set user_id = #{userId}," +
-            "set commodity_id = #{commodityId}," +
-            "set exchange_quantity = #{exchangeQuantity}," +
-            "set exchange_time = #{exchangeTime}," +
-            "set amount_before = #{amountBefore}," +
-            "set amount_after = #{amountAfter}," +
-            "set delivery_address = #{deliveryAddress}," +
-            "set user_contact = #{userContact}," +
+            "commodity_id = #{commodityId}," +
+            "exchange_quantity = #{exchangeQuantity}," +
+            "exchange_time = #{exchangeTime}," +
+            "amount_before = #{amountBefore}," +
+            "amount_after = #{amountAfter}," +
+            "delivery_address = #{deliveryAddress}," +
+            "user_contact = #{userContact}" +
             "where exchange_id = #{exchangeId}" )
     int update(Exchange exchange);
     //3selectOne

@@ -19,8 +19,8 @@ public class ExchangeServiceImpl implements ExchangeService {
     }
 
     @Override
-    public int delete(long exchange_id) {
-        return exchangeMapper.delete(exchange_id);
+    public int delete(long exchangeId) {
+        return exchangeMapper.delete(exchangeId);
     }
 
     @Override

@@ -8,7 +8,7 @@ public interface ExchangeService {
     //0insert
     public int insert(Exchange exchange);
     //1delete
-    public int delete(long exchange_id);
+    public int delete(long exchangeId);
     //2update
     public int update(Exchange exchange);
     //3selectOne

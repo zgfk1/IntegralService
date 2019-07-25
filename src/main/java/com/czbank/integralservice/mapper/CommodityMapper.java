@@ -20,12 +20,12 @@ public interface CommodityMapper {
     int delete(long commodity_id);
     //2update
     @Update("update commodity set commodity_name = #{commodityName}," +
-            "set commodity_integral = #{commodityIntegral}," +
-            "set commodity_amount = #{commodityAmount}," +
-            "set commodity_exchangenum = #{commodityExchangenum}," +
-            "set commodity_availablenum = #{commodityAvailablenum}," +
-            "set commodity_intro = #{commodityIntro}," +
-            "set commodity_picture = #{commodityPicture}," +
+            "integral_num = #{integralNum}," +
+            "amount = #{amount}," +
+            "exchange_num = #{exchangeNum}," +
+            "available_num = #{availableNum}," +
+            "intro = #{intro}," +
+            "picture = #{picture}" +
             "where commodity_id = #{commodityId}")
     int update(Commodity commodity);
     //3selectOne
