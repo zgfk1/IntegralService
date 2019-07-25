@@ -23,5 +23,16 @@ public interface UserService {
 
     //获得推荐商品预览列表
 
+    public int userInsert(User user);
+    //添加用户信息 陈易京
+
+    public int userDelete(Long userId);
+    //删除用户信息 陈易京
+
+    public int integralAmountUpdate(Long userId,int integralAmount2);
+    //更新用户积分
+
+    public int integralHistoryAmountUpdate(Long userId,int integralHistoryAmount2);
+    //更新用户历史总积分
 
 }
