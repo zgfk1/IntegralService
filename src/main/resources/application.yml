@@ -1,11 +1,11 @@
 server:
-  port: 8080
+  port: 8082
   servlet:
     context-path: /
 
 spring:
   datasource:
-    url: jdbc:mysql://120.78.148.229:3306/integral_service?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://120.78.148.229:3306/integral_service?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: czbank
     password: czbank123
     driver-class-name: com.mysql.cj.jdbc.Driver
