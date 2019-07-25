@@ -28,24 +28,22 @@ public class IntegralController {
 
     //查询用户积分
     @RequestMapping("/integral")
-    public int searchOfUserIntegral(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public Object searchOfUserIntegral(HttpServletRequest req, HttpServletResponse resp) {
         //接受
-        String userId=req.getParameter("user_Id");
+        String userId=req.getParameter("user_id");
+
         User user = new User();
         user.setUserId(Long.parseLong(userId));
+
         try {
             User userInfo = userService.getUserInfoOneById(user);
             return userInfo.getIntegralAmount();
         }catch (Exception e) {
             e.printStackTrace();
-            log.error(e.getMessage());
-        } finally {
-            PrintWriter out = resp.getWriter();
-            out.flush();
-            out.close();
         }
 
-       return 0;
+       return 0;//表示指定用户不存在！
+
     }
 
 }
