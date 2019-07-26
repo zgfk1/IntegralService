@@ -25,15 +25,22 @@ public interface UserMapper {
 
     @Insert("insert into user(user_id,account,password,name,salt,user_type,integral_amount,integral_history_amount,tel_number,address)" +
             "values(#{userId},#{account},#{password},#{name},#{salt},#{userType},#{integralAmount},#{integralHistoryAmount},#{telNumber},#{address})")
-    public int userInsert(User user);//Yijing Chen
+    int userInsert(User user);//Yijing Chen
 
     @Delete("delete from user where user_id = #{userId}")
-    public int userDelete(Long userId);//Yijing Chen
+    int userDelete(Long userId);//Yijing Chen
 
     @Update("update user set integral_amount = #{integralAmount2} where user_id = #{userId}")
-    public int integralAmountUpdate(Long userId,int integralAmount2);//Yijing Chen
+    int integralAmountUpdate(Long userId, int integralAmount2);//Yijing Chen
 
     @Update("update user set integral_history_amount = #{integralHistoryAmount2} where user_id = #{userId}")
-    public int integralHistoryAmountUpdate(Long userId,int integralHistoryAmount2);//Yijing Chen
+    int integralHistoryAmountUpdate(Long userId, int integralHistoryAmount2);//Yijing Chen
+
+    /**
+     * 通过用户名来查找user
+     */
+    @Select("select * from user where account = #{account} limit 1")
+    User selectUserByAccount(String account);
+
 
 }

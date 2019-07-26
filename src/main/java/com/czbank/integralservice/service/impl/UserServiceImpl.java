@@ -63,4 +63,16 @@ public class UserServiceImpl implements UserService {
     public int integralHistoryAmountUpdate(Long userId,int integralHistoryAmount2) {
         return userMapper.integralHistoryAmountUpdate(userId,integralHistoryAmount2);
     }//陈易京
+
+    /**
+     * Han 2019.7.26
+     * 通过账号寻找user
+     *
+     * @param account
+     * @return
+     */
+    @Override
+    public User findUserByAccount(String account) {
+        return userMapper.selectUserByAccount(account);
+    }
 }

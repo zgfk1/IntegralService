@@ -6,15 +6,12 @@ import com.czbank.integralservice.service.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * ClassName: MissionController
@@ -28,9 +25,10 @@ public class MissionController {
     @Autowired
     private MissionService missionService;
     //0insert
+    @ResponseBody
     @RequestMapping("/missionInsert")
-    public Object missionInsert(HttpServletRequest req,
-                                 HttpServletResponse resp) throws IOException {
+    public Object missionInsert(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
         //接受
 //        long missionId = Long.parseLong(req.getParameter("missionId"));
 //        String missionName = req.getParameter("missionName");
