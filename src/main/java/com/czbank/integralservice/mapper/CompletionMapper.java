@@ -26,10 +26,10 @@ public interface CompletionMapper {
     int delete(long completionId);
     //2update
     @Update("update completion set user_id = #{userId}," +
-            "set mission_id = #{missionId}," +
-            "set completion_time = #{completionTime}," +
-            "set amount_before = #{amountBefore}," +
-            "set amount_after = #{amountAfter}" +
+            "mission_id = #{missionId}," +
+            "completion_time = #{completionTime}," +
+            "amount_before = #{amountBefore}," +
+            "amount_after = #{amountAfter}" +
             "where completion_id = #{completionId}" )
     int update(Completion completion);
     //3selectOne
