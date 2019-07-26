@@ -10,10 +10,10 @@ import java.util.List;
 @Repository
 public interface CommodityMapper {
     //0insert
-    @Insert("insert into commodity(commodity_id,commodity_name,commodity_integral,commodity_amount," +
-            "commodity_exchangenum,commodity_availablenum,commodity_intro,commodity_picture)" +
-            "values(#{commodityId},#{commodityName},#{commodityIntegral},#{commodityAmount}," +
-            "#{commodityExchangenum},#{commodityAvailablenum},#{commodityIntro},#{commodityPicture})")
+    @Insert("insert into commodity(commodity_id,commodity_name,integral_num,amount," +
+            "exchange_num,available_num,intro,picture)" +
+            "values(#{commodityId},#{commodityName},#{integralNum},#{amount}," +
+            "#{exchangeNum},#{availableNum},#{intro},#{picture})")
     int insert(Commodity commodity);
     //1delete
     @Delete("delete from commodity where commodity_id = #{commodityId}")
