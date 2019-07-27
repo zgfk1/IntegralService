@@ -5,10 +5,12 @@ import com.czbank.integralservice.mapper.CommodityMapper;
 import com.czbank.integralservice.mapper.ExchangeMapper;
 import com.czbank.integralservice.model.Commodity;
 import com.czbank.integralservice.model.Exchange;
+import com.czbank.integralservice.model.Mission;
 import com.czbank.integralservice.service.GoodsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -134,15 +137,8 @@ public class GoodsController {
      * @throws IOException
      */
     @GetMapping("/commoditys")
-    public Object queryGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        List<Commodity> commoditys = new ArrayList<>();
-        try{
-            commoditys = commodityMapper.selectAll();
-            return JSON.toJSONString(commoditys.toString());
-        } catch (Exception e) {
-            log.error("查询失败，请稍后再试", e);
-            throw e;
-        }
+    public Object queryGoods(HttpServletRequest request, HttpServletResponse response) {
+        return JSON.toJSONString(goodsService.selectAll());
     }
 
     /**
@@ -153,19 +149,11 @@ public class GoodsController {
      * @throws IOException
      */
     @GetMapping("/commodity")
-    public Object querySpecialGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Commodity commodity = new Commodity();
+    public Object querySpecialGoods(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getParameter("commodityId");
-        System.out.println(id);
-        commodity.setCommodityId(Long.parseLong(id));
-        try{
-            commodity = commodityMapper.selectOne(commodity);
-            JSON.toJSONString(commodity);
-            return JSON.toJSONString(commodity);
-        } catch (Exception e) {
-            log.error("查询失败，请稍后再试", e);
-            throw e;
-        }
+        List list = new ArrayList();
+        list.add(goodsService.selectOne(Long.parseLong(id)));
+        return JSON.toJSONString(list);
     }
 
     /**

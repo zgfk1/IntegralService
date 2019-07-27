@@ -19,8 +19,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public int delete(long commodity_id) {
-        return commodityrMapper.delete(commodity_id);
+    public int delete(long commodityId) {
+        return commodityrMapper.delete(commodityId);
     }
 
     @Override
@@ -29,8 +29,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Commodity selectOne(Commodity commodity) {
-        return commodityrMapper.selectOne(commodity);
+    public Commodity selectOne(long commodityId) {
+        return commodityrMapper.selectOne(commodityId);
     }
 
     @Override

@@ -124,8 +124,7 @@ public class IntegralController {
         try {
             User userInfo = userService.getUserInfoOneById(user);
             Commodity commodity = new Commodity();
-            commodity.setCommodityId(Long.parseLong(commodityId));
-            commodity = goodsService.selectOne(commodity);//找到User和Commodity
+            commodity = goodsService.selectOne(Long.parseLong(commodityId));//找到User和Commodity
             Long IntegralNum = commodity.getIntegralNum();
             int integralAmountBefore = userInfo.getIntegralAmount();//商品兑换不影响历史积分
             System.out.println("2 CLEAR");
