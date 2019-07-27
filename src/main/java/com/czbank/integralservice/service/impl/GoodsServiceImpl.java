@@ -37,5 +37,12 @@ public class GoodsServiceImpl implements GoodsService {
     public List<Commodity> selectAll() {
         return commodityrMapper.selectAll();
     }
+
+    @Override
+    public List<Commodity> selectAllPage( int np, int size){ return commodityrMapper.selectAllPage((np-1)*size,size); }
+
+    @Override
+    public int count(){ return commodityrMapper.count(); }
+
 }
 

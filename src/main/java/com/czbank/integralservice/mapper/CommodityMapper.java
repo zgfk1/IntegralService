@@ -32,7 +32,14 @@ public interface CommodityMapper {
     @Select("select * from commodity where commodity_id = #{commodityId}")
     Commodity selectOne(Commodity commodity);
     //4selectAll
-    @Select("select * from commodity")
+    @Select("select * from commodity order by commodity_id desc")
     List<Commodity> selectAll();
+    //5selectAllPage
+    @Select("select * from commodity order by commodity_id desc limit #{np},#{size}")
+    List<Commodity> selectAllPage(@Param("np") int np,@Param("size") int size);
+    //6count
+    @Select("select count(*) from commodity")
+    int count();
 }
+
 

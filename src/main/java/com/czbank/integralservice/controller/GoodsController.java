@@ -5,6 +5,7 @@ import com.czbank.integralservice.mapper.CommodityMapper;
 import com.czbank.integralservice.mapper.ExchangeMapper;
 import com.czbank.integralservice.model.Commodity;
 import com.czbank.integralservice.model.Exchange;
+import com.czbank.integralservice.service.GoodsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,9 @@ public class GoodsController {
 
     @Resource
     private ExchangeMapper exchangeMapper;
+
+    @Resource
+    private GoodsService goodsService;
 
     /**
      * 添加新商品接口
@@ -158,11 +162,25 @@ public class GoodsController {
         try{
             commodity = commodityMapper.selectOne(commodity);
             JSON.toJSONString(commodity);
-            return null;
+            return JSON.toJSONString(commodity);
         } catch (Exception e) {
             log.error("查询失败，请稍后再试", e);
             throw e;
         }
+    }
+
+    /**
+     * 查询商品 分页接口
+     * @throws IOException
+     */
+    @GetMapping("/commoditysPage")
+    public Object selectAllPage(HttpServletRequest req, HttpServletResponse resp){
+        //接受
+        String np=req.getParameter("np");
+        String size=req.getParameter("size");
+        Commodity commodity = new Commodity();
+        //处理
+        return JSON.toJSONString(String.valueOf(goodsService.count()) + goodsService.selectAllPage(Integer.parseInt(np),Integer.parseInt(size)));
     }
 
     /**

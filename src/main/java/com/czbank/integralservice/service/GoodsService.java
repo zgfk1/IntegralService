@@ -15,4 +15,8 @@ public interface GoodsService {
     public Commodity selectOne(Commodity commodity);
     //4selectAll
     public List<Commodity> selectAll();
+    //5selectAllPage
+    public List<Commodity> selectAllPage( int np, int size);
+    //6count
+    public int count();
 }
