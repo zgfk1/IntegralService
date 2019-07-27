@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -178,9 +177,18 @@ public class GoodsController {
         //接受
         String np=req.getParameter("np");
         String size=req.getParameter("size");
-        Commodity commodity = new Commodity();
         //处理
-        return JSON.toJSONString(String.valueOf(goodsService.count()) + goodsService.selectAllPage(Integer.parseInt(np),Integer.parseInt(size)));
+        List<Commodity> goodInfo=goodsService.selectAllPage(Integer.parseInt(np),Integer.parseInt(size));
+        return JSON.toJSONString(goodInfo);
+    }
+    /**
+     * 获取最新的两个商品，用户信息界面推送
+     * @throws IOException
+     */
+    @GetMapping("/newGoods")
+    public Object selectnewGoods(){
+        List<Commodity> goodInfo=goodsService.selectAllPage(1,2);
+        return JSON.toJSONString(goodInfo);
     }
 
     /**
