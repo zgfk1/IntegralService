@@ -22,4 +22,18 @@ public interface MissionService {
     public Mission missionSelectOne(long missionId);
     //4selectAll
     public List<Mission> missionSelectAll();
+
+
+    /**
+     * @return 返回分页查询的用户列表
+     * @author danghaibulan
+     */
+    public int missionValidCount();
+
+    /**
+     * @return 返回分页查询的用户列表
+     * @author danghaibulan
+     */
+    public List<Mission> missionSelectOnepage(int page,int limit);
+
 }

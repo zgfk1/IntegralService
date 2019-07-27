@@ -37,4 +37,21 @@ public interface MissionMapper extends tk.mybatis.mapper.common.Mapper<Mission> 
     //4selectAll
     @Select("select * from mission order by mission_id desc")
     public List<Mission> missionSelectAll();
+
+
+    /**
+     * 返回所有有效任务
+     * @return 有效任务列表
+     */
+    @Select("select * from mission where mission_valid=1 order by mission_id desc")
+    public List<Mission> missionValidSelectAll();
+
+    /**
+     * 返回特定页的有效任务
+     * @param page
+     * @param limit
+     * @return
+     */
+    @Select("select * from mission where mission_valid=1 order by mission_id desc limit #{page},#{limit}")
+    public List<Mission> missionSelectLimitPage(int page, int limit);
 }

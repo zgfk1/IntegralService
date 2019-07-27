@@ -42,4 +42,14 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public List<Mission> missionSelectAll() { return missionMapper.missionSelectAll();
     }
+
+    @Override
+    public int missionValidCount() {
+        return missionMapper.missionValidSelectAll().size();
+    }
+
+    @Override
+    public List<Mission> missionSelectOnepage(int page, int limit) {
+        return missionMapper.missionSelectLimitPage(page,limit);
+    }
 }

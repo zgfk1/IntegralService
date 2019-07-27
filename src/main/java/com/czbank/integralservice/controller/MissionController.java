@@ -126,4 +126,28 @@ public class MissionController {
         pw.flush();
         pw.close();
     }
+    //4selectAll
+
+    /**
+     * @author 李举磊
+     * @return 返回有效任务总数
+     */
+    @ResponseBody
+    @RequestMapping("/getAllMissionCount")
+    public int getAllMissionCount() {
+        return missionService.missionValidCount();
+    }
+
+    /**
+     * @author 李举磊
+     * @param req
+     * @return 返回特定一页的有效任务列表
+     */
+    @ResponseBody
+    @RequestMapping("/getMissionOnePage")
+    public Object getMissionOnePage(HttpServletRequest req) {
+        int start=Integer.valueOf(req.getParameter("start"));
+        int limit=Integer.valueOf(req.getParameter("limit"));
+        return JSON.toJSONString(missionService.missionSelectOnepage(start*limit,limit));
+    }
 }
