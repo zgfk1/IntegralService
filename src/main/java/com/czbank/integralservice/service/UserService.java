@@ -7,21 +7,20 @@ import java.util.List;
 
 
 /**
+ * 用户相关的服务
  * @author danghaibulan
  */
 public interface UserService {
 
 
-    /*用户首页相关模块需要的业务方法接口*/
-
-    //通过获得当前用户信息
-    User getUserOneById(User user);
-
-    //获取可展示的用户信息
+    /**
+     * 个人中心用户信息的显示
+     * @param user 传入的特定用户
+     * @return 用户界面需要的用户信息
+     */
     User getUserInfoOneById(User user);
-    //获得当前可获取积分的任务列表
 
-    //获得推荐商品预览列表
+
 
     int userInsert(User user);
     //添加用户信息 陈易京

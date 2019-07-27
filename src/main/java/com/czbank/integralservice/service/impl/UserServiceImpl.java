@@ -18,29 +18,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-
     /**
-     * @param user 需要查询的用户实体
-     * @return 数据库中完整的用户实体
-     */
-    @Override
-    public User getUserOneById(User user) {
-
-        return userMapper.UserSelectOne(user);
-    }
-
-    /**
-     * 返回安全的用户信息
-     * @param user 传入的用户信息
-     * @return userInfo 返回的用户信息
-     *
+     * 个人中心用户信息的显示
+     * @param user 传入的特定用户
+     * @return 用户界面需要的用户信息
      */
     @Override
     public User getUserInfoOneById(User user) {
-        User userInfo = new User();
-        userInfo=userMapper.UserSelectOne(user);
-
+        User userInfo=userMapper.UserSelectOne(user);
         userInfo.setPassword(null);
+        userInfo.setUserType(null);
+        userInfo.setSalt(null);
         return  userInfo;
     }
 
