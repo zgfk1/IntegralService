@@ -8,11 +8,11 @@ public interface GoodsService {
     //0insert
     public int insert(Commodity commodity);
     //1delete
-    public int delete(long commodity_id);
+    public int delete(long commodityId);
     //2update
     public int update(Commodity commodity);
     //3selectOne
-    public Commodity selectOne(Commodity commodity);
+    public Commodity selectOne(long commodityId);
     //4selectAll
     public List<Commodity> selectAll();
     //5selectAllPage

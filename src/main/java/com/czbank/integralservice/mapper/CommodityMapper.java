@@ -17,7 +17,7 @@ public interface CommodityMapper {
     int insert(Commodity commodity);
     //1delete
     @Delete("delete from commodity where commodity_id = #{commodityId}")
-    int delete(long commodity_id);
+    int delete(Long commodityId);
     //2update
     @Update("update commodity set commodity_name = #{commodityName}," +
             "integral_num = #{integralNum}," +
@@ -30,7 +30,7 @@ public interface CommodityMapper {
     int update(Commodity commodity);
     //3selectOne
     @Select("select * from commodity where commodity_id = #{commodityId}")
-    Commodity selectOne(Commodity commodity);
+    Commodity selectOne(Long commodityId);
     //4selectAll
     @Select("select * from commodity order by commodity_id desc")
     List<Commodity> selectAll();
