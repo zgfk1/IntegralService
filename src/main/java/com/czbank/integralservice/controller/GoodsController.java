@@ -171,6 +171,7 @@ public class GoodsController {
         List<Commodity> goodInfo=goodsService.selectAllPage(Integer.parseInt(np),Integer.parseInt(size));
         return JSON.toJSONString(goodInfo);
     }
+
     /**
      * 获取最新的两个商品，用户信息界面推送
      * @throws IOException
@@ -208,4 +209,18 @@ public class GoodsController {
             throw e;
         }
     }
+
+    /**
+     * 查询用户兑换商品 总数（总次数）接口
+     * @throws IOException
+     */
+    @GetMapping("/selectAllUserGoods")
+    public Object selectAllUserGoods(HttpServletRequest req, HttpServletResponse resp){
+        //接受
+        String userId=req.getParameter("userId");
+        //处理
+        List<Exchange> userGoodsList = goodsService.selectAllUserGoods(userId);
+        return JSON.toJSONString(userGoodsList);
+    }
+
 }
