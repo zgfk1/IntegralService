@@ -36,5 +36,8 @@ public interface ExchangeMapper {
     //4selectAll
     @Select("select * from exchange")
     List<Exchange> selectAll();
-
+    @Select("select count(*) from exchange where user_id = #{userId}")
+    int countUserGoods(String userId);
+    @Select("select * from exchange where user_id = #{userId}")
+    List<Exchange> selectAllUserGoods(String userId);
 }

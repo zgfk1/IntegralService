@@ -39,4 +39,11 @@ public interface CompletionMapper {
     @Select("select * from completion")
     List<Completion> selectAll();
 
+    /**
+     * 查询用户是否今日已经签到
+     * @return 返回该今日签到的用户任务记录
+     */
+    @Select("select * from completion where user_id =#{userId} and mission_id=#{missionId} and completion_time=#{completionTime} ")
+    List<Completion> selectSigned(Completion completion);
+
 }

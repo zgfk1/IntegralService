@@ -20,6 +20,7 @@ public interface UserService {
      */
     User getUserInfoOneById(User user);
 
+    int signInUpdate(long userId,int integral,int integralHis);
 
 
     int userInsert(User user);

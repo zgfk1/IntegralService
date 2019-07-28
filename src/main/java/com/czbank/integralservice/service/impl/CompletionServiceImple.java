@@ -1,14 +1,14 @@
 package com.czbank.integralservice.service.impl;
 
 import com.czbank.integralservice.mapper.CompletionMapper;
-import com.czbank.integralservice.mapper.ExchangeMapper;
 import com.czbank.integralservice.model.Completion;
-import com.czbank.integralservice.model.Exchange;
+import com.czbank.integralservice.model.Mission;
+import com.czbank.integralservice.model.User;
 import com.czbank.integralservice.service.CompletionService;
-import com.czbank.integralservice.service.ExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /*
@@ -45,5 +45,34 @@ public class CompletionServiceImple implements CompletionService {
     @Override
     public List<Completion> selectAll() {
         return completionMapper.selectAll();
+    }
+
+    @Override
+    public boolean userSignInMission(User user, Mission mission) {
+        long missionID=mission.getMissionId();
+        Completion signCompletion=new Completion();
+        signCompletion.setUserId(user.getUserId());
+        signCompletion.setMissionId(missionID);
+        LocalDate now=LocalDate.now();
+        signCompletion.setCompletionTime(now);
+        signCompletion.setAmountAfter(Long.valueOf(user.getIntegralAmount()+mission.getMissionIntegral()));
+        signCompletion.setAmountBefore(Long.valueOf(user.getIntegralAmount()));
+        if(completionMapper.insert(signCompletion)!=0)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean getUserSignIn(User user, Mission mission) {
+        long missionID=mission.getMissionId();
+        Completion signCompletion=new Completion();
+        signCompletion.setUserId(user.getUserId());
+        signCompletion.setMissionId(missionID);
+        LocalDate now=LocalDate.now();
+        signCompletion.setCompletionTime(now);
+        if (completionMapper.selectSigned(signCompletion).size()>=1)
+            return true;
+        return false;
     }
 }

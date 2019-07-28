@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int signInUpdate(long userId, int integral, int integralHis) {
+        return userMapper.updateIntegralAmount( userId, integral,integralHis);
+    }
+
+    @Override
     public int userInsert(User user) {
         return userMapper.userInsert(user);
     }//陈易京

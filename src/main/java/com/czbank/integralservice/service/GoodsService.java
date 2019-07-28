@@ -1,6 +1,8 @@
 package com.czbank.integralservice.service;
 
 import com.czbank.integralservice.model.Commodity;
+import com.czbank.integralservice.model.Exchange;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -19,4 +21,8 @@ public interface GoodsService {
     public List<Commodity> selectAllPage( int np, int size);
     //6count
     public int count();
+    //7countUserGoods
+    public int countUserGoods(String userId);
+    //8selectAllUserGoods
+    public List<Exchange> selectAllUserGoods(String userId);
 }
