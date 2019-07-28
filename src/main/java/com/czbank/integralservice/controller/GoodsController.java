@@ -131,14 +131,17 @@ public class GoodsController {
 
     /**
      * 查询商品信息接口
-     *
-     * @param request
-     * @param response
-     * @throws IOException
      */
     @GetMapping("/commoditys")
-    public Object queryGoods(HttpServletRequest request, HttpServletResponse response) {
+    public Object queryGoods() {
         return JSON.toJSONString(goodsService.selectAll());
+    }
+    /**
+     * 总数
+     */
+    @GetMapping("/goodcount")
+    public int getGootCount() {
+        return goodsService.count();
     }
 
     /**
@@ -158,10 +161,9 @@ public class GoodsController {
 
     /**
      * 查询商品 分页接口
-     * @throws IOException
      */
     @GetMapping("/commoditysPage")
-    public Object selectAllPage(HttpServletRequest req, HttpServletResponse resp){
+    public Object selectAllPage(HttpServletRequest req){
         //接受
         String np=req.getParameter("np");
         String size=req.getParameter("size");
