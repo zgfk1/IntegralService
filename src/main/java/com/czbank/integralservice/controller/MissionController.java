@@ -118,11 +118,9 @@ public class MissionController {
     //4selectAll
     @RequestMapping("/missionSelectAll")
     public void missionSelectAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        //接受
-        Mission mission = new Mission();
         //处理
         PrintWriter pw = resp.getWriter();
-        pw.write( JSON.toJSONString(missionService.missionSelectAll()));
+        pw.write(JSON.toJSONString(missionService.missionSelectAll()));
         pw.flush();
         pw.close();
     }
