@@ -52,9 +52,13 @@ public class SignController {
                 resultJson.put("attach", "");
                 throw new Exception("密码错误");
             }
-            String token = UUID.randomUUID().toString();
+
+            String uuid = UUID.randomUUID().toString();
             JSONObject attachJson = new JSONObject();
-            attachJson.put("token", token);
+            attachJson.put("token", uuid);
+            attachJson.put("userId", user.getUserId());
+            attachJson.put("userType", user.getUserType());
+            attachJson.put("name", user.getName());
 
             resultJson.put("code", "0");
             resultJson.put("msg", "登陆成功");
