@@ -1,22 +1,17 @@
 package com.czbank.integralservice.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.czbank.integralservice.model.*;
 import com.czbank.integralservice.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.time.LocalDate;
 
 /*
   author: Yijing Chen
@@ -46,7 +41,7 @@ public class IntegralController {
     @RequestMapping("/integral")
     public Object searchOfUserIntegral(HttpServletRequest req, HttpServletResponse resp) {
         //接受
-        String userId=req.getParameter("user_id");
+        String userId = req.getParameter("user_id");
 
         User user = new User();
         user.setUserId(Long.parseLong(userId));
@@ -54,11 +49,11 @@ public class IntegralController {
         try {
             User userInfo = userService.getUserInfoOneById(user);
             return JSON.toJSONString(userInfo.getIntegralAmount());
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-       return 0;//表示指定用户不存在！
+        return 0;//表示指定用户不存在！
 
     }
 
@@ -66,8 +61,8 @@ public class IntegralController {
     @RequestMapping("/integral_mission")
     public Object integralSettlementOfMission(HttpServletRequest req, HttpServletResponse resp) {
         //接受
-        String userId=req.getParameter("user_id");
-        String missionId=req.getParameter("mission_id");
+        String userId = req.getParameter("user_id");
+        String missionId = req.getParameter("mission_id");
 
         User user = new User();
         user.setUserId(Long.parseLong(userId));//创立User
@@ -85,17 +80,17 @@ public class IntegralController {
 
             System.out.println("2 CLEAR");
             completion.setAmountBefore(Long.valueOf(integralAmountBefore));
-            completion.setAmountAfter(Long.valueOf(integralAmountBefore)+missionIntegral);
+            completion.setAmountAfter(Long.valueOf(integralAmountBefore) + missionIntegral);
             completion.setCompletionTime(LocalDate.now());//封装
 
             System.out.println(completion.toString());
             completionService.insert(completion);
-            userService.integralAmountUpdate(Long.parseLong(userId),integralAmountBefore+missionIntegral.intValue());
-            userService.integralHistoryAmountUpdate(Long.parseLong(userId),integralHistoryAmountBefore+missionIntegral.intValue());
+            userService.integralAmountUpdate(Long.parseLong(userId), integralAmountBefore + missionIntegral.intValue());
+            userService.integralHistoryAmountUpdate(Long.parseLong(userId), integralHistoryAmountBefore + missionIntegral.intValue());
 
             System.out.println("4 CLEAR");
-            return JSON.toJSONString(integralAmountBefore+missionIntegral.intValue());
-        }catch (Exception e) {
+            return JSON.toJSONString(integralAmountBefore + missionIntegral.intValue());
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -106,12 +101,13 @@ public class IntegralController {
     //兑换商品积分结算
     @RequestMapping("/integral_commodity")
     public Object integralSettlementOfCommodity(HttpServletRequest req, HttpServletResponse resp) {
+        JSONObject resultJson = new JSONObject();
         //接受
-        String userId = req.getParameter("user_id");
-        String commodityId = req.getParameter("commodity_id");
-        int exchangeQuantity = Integer.parseInt(req.getParameter("exchange_quantity"));
-        String deliveryAddress = req.getParameter("delivery_address");
-        String userContact = req.getParameter("user_contact");
+        String userId = req.getParameter("userId");
+        String commodityId = req.getParameter("commodityId");
+        int exchangeQuantity = Integer.parseInt(req.getParameter("quantity"));
+        String deliveryAddress = req.getParameter("address");
+        String userContact = req.getParameter("userContact");
 
         User user = new User();
         user.setUserId(Long.parseLong(userId));//创立User
@@ -119,37 +115,51 @@ public class IntegralController {
         exchange.setUserId(Long.parseLong(userId));
         exchange.setCommodityId(Long.parseLong(commodityId));
         exchange.setExchangeQuantity(exchangeQuantity);//创立商品兑换记录
-        System.out.println("1 CLEAR");
 
         try {
             User userInfo = userService.getUserInfoOneById(user);
-            Commodity commodity = new Commodity();
-            commodity = goodsService.selectOne(Long.parseLong(commodityId));//找到User和Commodity
-            Long IntegralNum = commodity.getIntegralNum();
+            Commodity commodity = goodsService.selectOne(Long.parseLong(commodityId));//找到User和Commodity
+            //商品积分价格
+            Long integralNum = commodity.getIntegralNum();
+            //当前用户剩余的积分
             int integralAmountBefore = userInfo.getIntegralAmount();//商品兑换不影响历史积分
-            System.out.println("2 CLEAR");
-            exchange.setAmountBefore(Long.valueOf(integralAmountBefore));
-            exchange.setAmountAfter(Long.valueOf(integralAmountBefore)-IntegralNum*exchangeQuantity);
+            if (integralAmountBefore < integralNum * exchangeQuantity) {
+                resultJson.put("code", "100");
+                resultJson.put("msg", "积分不足，无法兑换");
+                resultJson.put("attach", "");
+                return resultJson.toJSONString();
+            }
+
+            exchange.setAmountBefore((long) integralAmountBefore);
+            exchange.setAmountAfter((long) integralAmountBefore - integralNum * exchangeQuantity);
             exchange.setExchangeTime(LocalDate.now());
             exchange.setDeliveryAddress(deliveryAddress);
             exchange.setUserContact(userContact);//封装
 
             System.out.println(exchange.toString());
             exchangeService.insert(exchange);
-            commodity.setAvailableNum(commodity.getAvailableNum()-exchangeQuantity);
-            commodity.setExchangeNum(commodity.getExchangeNum()+exchangeQuantity);
-            System.out.println("3 CLEAR");
+            commodity.setAvailableNum(commodity.getAvailableNum() - exchangeQuantity);
+            commodity.setExchangeNum(commodity.getExchangeNum() + exchangeQuantity);
             goodsService.update(commodity);//更新商品供给数量
-            System.out.println("4 CLEAR");
-            userService.integralAmountUpdate(Long.parseLong(userId),integralAmountBefore-IntegralNum.intValue()*exchangeQuantity);
 
-            System.out.println("4 CLEAR");
-            return JSON.toJSONString(integralAmountBefore-IntegralNum.intValue()*exchangeQuantity);
-        }catch (Exception e) {
+            int leftIntegral = integralAmountBefore - integralNum.intValue() * exchangeQuantity;
+            userService.integralAmountUpdate(Long.parseLong(userId), leftIntegral);
+
+
+            JSONObject attachJson = new JSONObject();
+            attachJson.put("leftIntegral", leftIntegral + "");
+
+            resultJson.put("code", "0");
+            resultJson.put("msg", "成功兑换");
+            resultJson.put("attach", attachJson);
+            return resultJson.toJSONString();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return 0;//表示失败
-
+        resultJson.put("code", "101");
+        resultJson.put("msg", "未知错误");
+        resultJson.put("attach", "");
+        return resultJson.toJSONString();
     }
 }
