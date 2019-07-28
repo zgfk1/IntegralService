@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-
 public interface UserMapper {
 
 
@@ -42,5 +41,7 @@ public interface UserMapper {
     @Select("select * from user where account = #{account} limit 1")
     User selectUserByAccount(String account);
 
+    @Update("update user set integral_history_amount = #{integralHis},integral_amount =#{integral} where user_id = #{userId}")
+    int updateIntegralAmount(long userId,int integral,int integralHis);
 
 }
