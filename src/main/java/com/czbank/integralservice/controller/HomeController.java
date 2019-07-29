@@ -96,10 +96,10 @@ public class HomeController {
     @RequestMapping("user/issigned")
     public boolean userSignedIn(HttpServletRequest req){
         //获取用户ID
-        //Long userId=Long.valueOf(req.getParameter("userId"));
+        long userId=Long.valueOf(req.getParameter("userId"));
         User user = new User();
-        user.setUserId(1001L);
         //获取签到任务积分
+        user.setUserId(userId);
         Mission mission =missionService.missionSelectOne(1);
         //构建用户
         user= userService.getUserInfoOneById(user);
