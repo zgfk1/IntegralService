@@ -54,4 +54,9 @@ public interface MissionMapper extends tk.mybatis.mapper.common.Mapper<Mission> 
      */
     @Select("select * from mission where mission_valid=1 order by mission_id desc limit #{page},#{limit}")
     public List<Mission> missionSelectLimitPage(int page, int limit);
+
+
+    //5selectAllCount
+    @Select("select * from mission order by mission_id asc")
+    public List<Mission> missionSelectAllCount();
 }

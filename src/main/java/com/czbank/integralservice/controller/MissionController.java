@@ -28,66 +28,26 @@ public class MissionController {
     @ResponseBody
     @RequestMapping("/missionInsert")
     public Object missionInsert(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
-        //接受
-//        long missionId = Long.parseLong(req.getParameter("missionId"));
-//        String missionName = req.getParameter("missionName");
-//        String missionIntro = req.getParameter("missionIntro");
-//        long missionIntegral = Long.parseLong(req.getParameter("missionIntegral"));
-//        String missionPath = req.getParameter("missionPath");
-//        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        System.out.println(req.getParameter("startTime"));
-//        LocalDate startTime = LocalDate.parse(req.getParameter("startTime"),df);
-//        System.out.println(startTime.toString());
-//        LocalDate endTime = LocalDate.parse(req.getParameter("endTime"),df);
-//        boolean missionValid = Boolean.parseBoolean(req.getParameter("missionValid"));
-//        Mission mission = null;
-//        //封装
-//        try {
-//            System.out.println(missionId);
-//            System.out.println(missionName);
-//            mission = new Mission(
-//                    missionId,
-//                    missionName,
-//                    missionIntro,
-//                    missionIntegral,
-//                    missionPath,
-//                    startTime,
-//                    endTime,
-//                    missionValid
-//            );
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         String mission = req.getParameter("mission");
         ;
         Mission missionUp = JSON.toJavaObject(JSON.parseObject(mission), Mission.class);
         //处理
         missionService.missionInsert(missionUp);
 
-        PrintWriter pw = resp.getWriter();
-        pw.write("0");
-        pw.flush();
-        pw.close();
-
-        return null;
+        return '0';
     }
     //1delete
+    @ResponseBody
     @RequestMapping("/missionDelete")
     public Object missionDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //接受
         String missionId = req.getParameter("missionId");
-        Mission mission = null;
         //处理
         missionService.missionDelete(Long.parseLong(missionId));
-        PrintWriter pw = resp.getWriter();
-        pw.write("1");
-        pw.flush();
-        pw.close();
-
-        return null;
+        return '0';
     }
     //2update
+    @ResponseBody
     @RequestMapping("/missionUpdate")
     public Object missionUpdate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //接受
@@ -104,27 +64,36 @@ public class MissionController {
         return null;
     }
     //3selectOne
+    @ResponseBody
     @RequestMapping("/missionSelectOne")
-    public void missionSelectOne(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public Object missionSelectOne(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //接受
         String missionId = req.getParameter("missionId");
-        Mission mission = new Mission();
         //处理
-        PrintWriter pw = resp.getWriter();
-        pw.write( JSON.toJSONString(missionService.missionSelectOne(Long.parseLong(missionId))));
-        pw.flush();
-        pw.close();
+        String result = JSON.toJSONString(missionService.missionSelectOne(Long.parseLong(missionId)));
+        return result;
     }
     //4selectAll
+    @ResponseBody
     @RequestMapping("/missionSelectAll")
-    public void missionSelectAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public Object missionSelectAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //处理
-        PrintWriter pw = resp.getWriter();
-        pw.write(JSON.toJSONString(missionService.missionSelectAll()));
-        pw.flush();
-        pw.close();
+        String result = JSON.toJSONString(missionService.missionSelectAll());
+        return result;
     }
     //4selectAll
+
+
+    //5selectAllCount
+    @ResponseBody
+    @RequestMapping("/missionSelectAllCount")
+    public Object missionSelectAllCount(){
+
+        //处理
+        return JSON.toJSONString(missionService.missionSelectAllCount());
+    }
+
+
 
     /**
      * @author 李举磊

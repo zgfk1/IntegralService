@@ -23,6 +23,8 @@ public interface MissionService {
     //4selectAll
     public List<Mission> missionSelectAll();
 
+    //5selectAllCount
+    public List<Mission> missionSelectAllCount();
 
     /**
      * @return 返回分页查询的用户列表

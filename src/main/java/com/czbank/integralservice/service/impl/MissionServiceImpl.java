@@ -52,4 +52,8 @@ public class MissionServiceImpl implements MissionService {
     public List<Mission> missionSelectOnepage(int page, int limit) {
         return missionMapper.missionSelectLimitPage(page,limit);
     }
+
+    @Override
+    public List<Mission> missionSelectAllCount(){return missionMapper.missionSelectAllCount();
+    };
 }
