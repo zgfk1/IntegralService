@@ -19,10 +19,9 @@ public interface MissionService {
     //2update
     public int missionUpdate(Mission mission);
     //3selectOne
-    public Mission missionSelectOne(long missionId);
+    public List<Mission> missionSelectOne(long missionId);
     //4selectAll
-    public List<Mission> missionSelectAll();
-
+    public List<Mission> missionSelectAll(int np, int size);
     //5selectAllCount
     public List<Mission> missionSelectAllCount();
 

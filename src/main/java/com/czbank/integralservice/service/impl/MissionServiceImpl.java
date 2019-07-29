@@ -35,12 +35,15 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public Mission missionSelectOne(long missionId) {
+    public List<Mission> missionSelectOne(long missionId) {
         return missionMapper.missionSelectOne(missionId);
     }
 
     @Override
-    public List<Mission> missionSelectAll() { return missionMapper.missionSelectAll();
+    public List<Mission> missionSelectAll(int np, int size) { return missionMapper.missionSelectAll((np-1)*size,size);
+    }
+    @Override
+    public List<Mission> missionSelectAllCount(){return missionMapper.missionSelectAllCount();
     }
 
     @Override
@@ -53,7 +56,7 @@ public class MissionServiceImpl implements MissionService {
         return missionMapper.missionSelectLimitPage(page,limit);
     }
 
-    @Override
-    public List<Mission> missionSelectAllCount(){return missionMapper.missionSelectAllCount();
-    };
+//    @Override
+//    public List<Mission> missionSelectAllCount(){return missionMapper.missionSelectAllCount();
+//    };
 }

@@ -32,11 +32,15 @@ public interface MissionMapper extends tk.mybatis.mapper.common.Mapper<Mission> 
 
     //3selectOne
     @Select("select * from mission where mission_id = #{missionId} limit 1")
-    public Mission missionSelectOne(@Param("missionId") long missionId);
+    public List<Mission> missionSelectOne(@Param("missionId") long missionId);
 
     //4selectAll
-    @Select("select * from mission order by mission_id desc")
-    public List<Mission> missionSelectAll();
+    @Select("select * from mission order by mission_id asc limit #{np},#{size}")
+    public List<Mission> missionSelectAll(@Param("np") int np,@Param("size") int size);
+
+    //5selectAllCount
+    @Select("select * from mission order by mission_id asc")
+    public List<Mission> missionSelectAllCount();
 
 
     /**
@@ -56,7 +60,7 @@ public interface MissionMapper extends tk.mybatis.mapper.common.Mapper<Mission> 
     public List<Mission> missionSelectLimitPage(int page, int limit);
 
 
-    //5selectAllCount
-    @Select("select * from mission order by mission_id asc")
-    public List<Mission> missionSelectAllCount();
+//    //5selectAllCount
+//    @Select("select * from mission order by mission_id asc")
+//    public List<Mission> missionSelectAllCount();
 }

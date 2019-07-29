@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
+import java.util.List;
 
 /*
   author: Yijing Chen
@@ -73,8 +74,8 @@ public class IntegralController {
 
         try {
             User userInfo = userService.getUserInfoOneById(user);
-            Mission mission = missionService.missionSelectOne(Long.parseLong(missionId));//找到User和Completion
-            Long missionIntegral = mission.getMissionIntegral();
+            List<Mission> mission = missionService.missionSelectOne(Long.parseLong(missionId));//找到User和Completion
+            Long missionIntegral = mission.get(0).getMissionIntegral();
             int integralAmountBefore = userInfo.getIntegralAmount();
             int integralHistoryAmountBefore = userInfo.getIntegralHistoryAmount();
 

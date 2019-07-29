@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 /**
@@ -69,22 +70,22 @@ public class HomeController {
         User user = new User();
         user.setUserId(userId);
         //获取签到任务积分
-        Mission mission =missionService.missionSelectOne(1);
+        List<Mission> mission =missionService.missionSelectOne(1);
         //构建用户
         user= userService.getUserInfoOneById(user);
         //判断是否签到
-        if (completionService.getUserSignIn(user,mission)) {
+        if (completionService.getUserSignIn(user,mission.get(0))) {
             return false;
         }
 
         //签到
-        boolean flag=completionService.userSignInMission(user,mission);
+        boolean flag=completionService.userSignInMission(user,mission.get(0));
         //更改用户表积分和历史积分
         if (!flag) {
             return false;
         }
-        int integral= mission.getMissionIntegral().intValue()+user.getIntegralAmount();
-        int integralHis=mission.getMissionIntegral().intValue()+user.getIntegralHistoryAmount();
+        int integral= mission.get(0).getMissionIntegral().intValue()+user.getIntegralAmount();
+        int integralHis=mission.get(0).getMissionIntegral().intValue()+user.getIntegralHistoryAmount();
         this.userService.signInUpdate(user.getUserId(),integral,integralHis);
         return true;
     }
@@ -100,11 +101,11 @@ public class HomeController {
         User user = new User();
         //获取签到任务积分
         user.setUserId(userId);
-        Mission mission =missionService.missionSelectOne(1);
+        List<Mission> mission =missionService.missionSelectOne(1);
         //构建用户
         user= userService.getUserInfoOneById(user);
         //查询是否签到
-        boolean flag=completionService.getUserSignIn(user,mission);
+        boolean flag=completionService.getUserSignIn(user,mission.get(0));
         if (flag) {
             return true;
         }

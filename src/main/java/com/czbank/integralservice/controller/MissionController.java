@@ -5,6 +5,7 @@ import com.czbank.integralservice.model.Mission;
 import com.czbank.integralservice.service.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -64,33 +65,44 @@ public class MissionController {
         return null;
     }
     //3selectOne
-    @ResponseBody
-    @RequestMapping("/missionSelectOne")
-    public Object missionSelectOne(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    @PostMapping("/missionSelectOne")
+    public void missionSelectOne(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //接受
         String missionId = req.getParameter("missionId");
+//        System.out.println(missionId);
+        Mission mission = new Mission();
         //处理
-        String result = JSON.toJSONString(missionService.missionSelectOne(Long.parseLong(missionId)));
-        return result;
+        resp.setContentType("application/json;charset=UTF-8");
+        PrintWriter pw = resp.getWriter();
+        pw.write( JSON.toJSONString(missionService.missionSelectOne(Long.parseLong(missionId))));
+        pw.flush();
+        pw.close();
     }
     //4selectAll
-    @ResponseBody
     @RequestMapping("/missionSelectAll")
-    public Object missionSelectAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void missionSelectAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //接受
+        String np=req.getParameter("np");
+        String size=req.getParameter("size");
+        Mission mission = new Mission();
         //处理
-        String result = JSON.toJSONString(missionService.missionSelectAll());
-        return result;
+        resp.setContentType("application/json;charset=UTF-8");
+        PrintWriter pw = resp.getWriter();
+        pw.write(JSON.toJSONString(missionService.missionSelectAll(Integer.parseInt(np),Integer.parseInt(size))));
+        pw.flush();
+        pw.close();
     }
-    //4selectAll
-
-
     //5selectAllCount
-    @ResponseBody
     @RequestMapping("/missionSelectAllCount")
-    public Object missionSelectAllCount(){
-
+    public void missionSelectAllCount(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //接受
+        Mission mission = new Mission();
         //处理
-        return JSON.toJSONString(missionService.missionSelectAllCount());
+        resp.setContentType("application/json;charset=UTF-8");
+        PrintWriter pw = resp.getWriter();
+        pw.write(JSON.toJSONString(missionService.missionSelectAllCount()));
+        pw.flush();
+        pw.close();
     }
 
 
